@@ -13,6 +13,9 @@ const char *mqtt_username = "emqx";
 const char *mqtt_password = "public";
 const int mqtt_port = 1883;
 
+// hardware settings
+const int controlLedPin = 2;
+
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
@@ -28,7 +31,9 @@ void setup()
 
   while (WiFi.status() != WL_CONNECTED)
   { // Wait for the Wi-Fi to connect
+    digitalWrite(controlLedPin, HIGH);
     delay(500);
+    digitalWrite(controlLedPin, LOW);
     Serial.print('.');
   }
 
