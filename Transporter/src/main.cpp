@@ -3,16 +3,16 @@
 #include <PubSubClient.h>
 
 #define ONBOARD_LED 2
-char *NET_COMMAND_START_SERVICE = (char *)"s\0";
-char *NET_COMMAND_READY = (char *)"r\0";
-char *NET_COMMAND_MOVE = (char *)"m\0";
-char *NET_COMMAND_END_SERVICE = (char *)"e\0";
+char *NET_COMMAND_START_SERVICE = (char *)"s";
+char *NET_COMMAND_READY = (char *)"r";
+char *NET_COMMAND_MOVE = (char *)"m";
+char *NET_COMMAND_END_SERVICE = (char *)"e";
 
-#define DEVICE_COMMAND_START_SERVICE "start_service\0"
-#define DEVICE_COMMAND_READY "ready\0"
-#define DEVICE_COMMAND_END_SERVICE "end_service\0"
+#define DEVICE_COMMAND_START_SERVICE "start_service"
+#define DEVICE_COMMAND_READY "ready"
+#define DEVICE_COMMAND_END_SERVICE "end_service"
 
-const char *HOLON_ID = "rht-001\0";
+const char *HOLON_ID = "rht-001";
 
 // WiFi
 const char *ssid = "MEO-9ABB30";     // The SSID (name) of the Wi-Fi network you want to connect to
@@ -36,7 +36,6 @@ void publish(char *message)
   char topic[tl + 1];
   strcpy(topic, netTopic);
   strcat(topic, HOLON_ID);
-  topic[tl] = '\0';
 
   Serial.println("sending to: ");
   Serial.println(topic);
@@ -130,7 +129,7 @@ void setupMqqtClient()
   }
 
   // publish and subscribe
-  char message[20];
+  char message[20] = "Hi from ";
   strcpy(message, "Hi from ");
   strcat(message, HOLON_ID);
 
