@@ -64,9 +64,10 @@ void setup()
   Serial.begin(9600); // Start the Serial communication to send messages to the computer
   delay(10);
   Serial.println('\n');
+  setupMqqtClient();
+
   digitalWrite(13, LOW);
   digitalWrite(12, LOW);
-  setupMqqtClient();
 }
 
 void loop()
