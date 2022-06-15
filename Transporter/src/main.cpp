@@ -9,7 +9,7 @@
 #define NET_COMMAND_END_SERVICE 'e'
 
 #define DEVICE_COMMAND_START_SERVICE 's'
-#define DEVICE_COMMAND_READY 'ready'
+#define DEVICE_COMMAND_READY "ready"
 #define DEVICE_COMMAND_MOVE 'm'
 #define DEVICE_COMMAND_END_SERVICE 'e'
 
@@ -41,11 +41,19 @@ void callback(char *topic, byte *payload, unsigned int length)
   Serial.println(topic);
   Serial.print("Message:");
 
-  char p = payload[0];
-
   if (strcmp(topic, deviceTopic) == 0)
   {
-    if (DEVICE_COMMAND_READY == p)
+    char message[length + 1];
+    memcpy(message, payload, length);
+
+    digitalWrite(ONBOARD_LED, HIGH);
+
+    Serial.println(message);
+    Serial.println("-----------------------");
+
+    digitalWrite(ONBOARD_LED, LOW);
+
+    if (DEVICE_COMMAND_READY == message)
     {
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("ready command received");
@@ -53,15 +61,6 @@ void callback(char *topic, byte *payload, unsigned int length)
       digitalWrite(ONBOARD_LED, LOW);
     }
   }
-
-  for (int i = 0; i < length; i++)
-  {
-    digitalWrite(ONBOARD_LED, HIGH);
-    Serial.print((char)payload[i]);
-    digitalWrite(ONBOARD_LED, LOW);
-  }
-  Serial.println();
-  Serial.println("-----------------------");
 }
 
 void setupMqqtClient()
