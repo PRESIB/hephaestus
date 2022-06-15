@@ -34,8 +34,7 @@ void setupMqqtClient()
   mqttClient.setCallback(callback);
   while (!mqttClient.connected())
   {
-    String client_id = "esp32-client-";
-    client_id += String(ethClient.remoteIP());
+    String client_id = "esp32-client-arduino";
     Serial.println("The client " + client_id + " connects to the public mqtt broker");
     if (mqttClient.connect(client_id.c_str()))
     {
