@@ -5,13 +5,22 @@
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
 
+const String HOLON_ID = "rhm-001";
+
 // MQTT Broker
 const char *mqtt_broker = "test.mosquitto.org";
-const char *topic = "esp32/test";
+const char *netTopic = String("com/nfriacowboy/presib/holon/mqtt/net/" + HOLON_ID).c_str();
+const char *deviceTopic = String("com/nfriacowboy/presib/holon/mqtt/device/" + HOLON_ID).c_str();
+const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system";
 const int mqtt_port = 1883;
 
 EthernetClient ethClient;
 PubSubClient mqttClient(ethClient);
+
+void publish(char *message)
+{
+  mqttClient.publish(netTopic, message);
+}
 
 void callback(char *topic, byte *payload, unsigned int length)
 {
@@ -36,7 +45,8 @@ void setupMqqtClient()
   mqttClient.setCallback(callback);
   while (!mqttClient.connected())
   {
-    String client_id = "esp32-client-arduino";
+    String client_id = "rh::";
+    client_id += String(Ethernet.localIP());
     Serial.println("The client " + client_id + " connects to the public mqtt broker");
     if (mqttClient.connect(client_id.c_str()))
     {
@@ -51,8 +61,8 @@ void setupMqqtClient()
   }
 
   // publish and subscribe
-  mqttClient.publish(topic, "Hi EMQX I'm ESP32 ^^");
-  mqttClient.subscribe(topic);
+  mqttClient.publish(systemTopic, String("Hi from " + HOLON_ID).c_str());
+  mqttClient.subscribe(deviceTopic);
 }
 
 void setup()
