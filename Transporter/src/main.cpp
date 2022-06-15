@@ -9,7 +9,7 @@
 #define NET_COMMAND_END_SERVICE 'e'
 
 #define DEVICE_COMMAND_START_SERVICE 's'
-#define DEVICE_COMMAND_READY "ready"
+#define DEVICE_COMMAND_READY 'ready'
 #define DEVICE_COMMAND_MOVE 'm'
 #define DEVICE_COMMAND_END_SERVICE 'e'
 
@@ -41,31 +41,17 @@ void callback(char *topic, byte *payload, unsigned int length)
   Serial.println(topic);
   Serial.print("Message:");
 
-  if ("ready" == DEVICE_COMMAND_READY)
-  {
-    Serial.println("1 - ready is ready");
-  }
-  else
-  {
-    Serial.println("fail 1");
-  }
+  char p = payload[0];
 
-  if ("ready" == String.valueOf(payload))
+  if (strcmp(topic, deviceTopic) == 0)
   {
-    Serial.println("2 - ready is ready");
-  }
-  else
-  {
-    Serial.println("fail 2");
-  }
-
-  if (DEVICE_COMMAND_READY == String.valueOf(payload))
-  {
-    Serial.println("3 - ready is ready");
-  }
-  else
-  {
-    Serial.println("fail 3");
+    if (DEVICE_COMMAND_READY == p)
+    {
+      digitalWrite(ONBOARD_LED, HIGH);
+      Serial.print("ready command received");
+      delay(500);
+      digitalWrite(ONBOARD_LED, LOW);
+    }
   }
 
   for (int i = 0; i < length; i++)
