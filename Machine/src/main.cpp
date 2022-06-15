@@ -18,7 +18,11 @@ void callback(char *topic, byte *payload, unsigned int length)
   Serial.print("Message:");
   for (int i = 0; i < length; i++)
   {
+    digitalWrite(13, HIGH);
+    digitalWrite(12, HIGH);
     Serial.print((char)payload[i]);
+    digitalWrite(13, LOW);
+    digitalWrite(12, LOW);
   }
   Serial.println();
   Serial.println("-----------------------");
@@ -53,10 +57,16 @@ void setupMqqtClient()
 void setup()
 {
 
+  pinMode(13, OUTPUT);
+  pinMode(12, OUTPUT);
+
+  digitalWrite(13, HIGH);
+  digitalWrite(12, HIGH);
   Serial.begin(9600); // Start the Serial communication to send messages to the computer
   delay(10);
   Serial.println('\n');
-
+  digitalWrite(13, LOW);
+  digitalWrite(12, LOW);
   setupMqqtClient();
 }
 
