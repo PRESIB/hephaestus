@@ -12,7 +12,7 @@ char *NET_COMMAND_END_SERVICE = (char *)"e";
 #define DEVICE_COMMAND_READY "ready"
 #define DEVICE_COMMAND_END_SERVICE "end_service"
 
-const String HOLON_ID = "rht-001";
+const char *HOLON_ID = "rht-001";
 
 // WiFi
 const char *ssid = "MEO-9ABB30";     // The SSID (name) of the Wi-Fi network you want to connect to
@@ -20,8 +20,8 @@ const char *password = "4ff01eb05e"; // The password of the Wi-Fi network
 
 // MQTT Broker
 const char *mqtt_broker = "test.mosquitto.org";
-const char *netTopic = "com/nfriacowboy/presib/holon/mqtt/net/rht-001";
-const char *deviceTopic = "com/nfriacowboy/presib/holon/mqtt/device/rht-001";
+const char *netTopic = "com/nfriacowboy/presib/holon/mqtt/net/";
+const char *deviceTopic = "com/nfriacowboy/presib/holon/mqtt/device/";
 const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system";
 
 const int mqtt_port = 1883;
@@ -31,11 +31,14 @@ PubSubClient mqttClient(espClient);
 
 void publish(char *message)
 {
+  char topic[sizeof(netTopic) + sizeof(HOLON_ID) + 1];
+  strcpy(topic, netTopic);
+  strcat(topic, HOLON_ID);
   digitalWrite(ONBOARD_LED, HIGH);
   Serial.println("sending to: ");
-  Serial.println(netTopic);
+  Serial.println(topic);
 
-  if (mqttClient.publish(netTopic, message))
+  if (mqttClient.publish(topic, message))
   {
     Serial.println("message sent");
   }
@@ -63,7 +66,7 @@ void callback(char *topic, byte *payload, unsigned int length)
     strncpy(message, (char *)payload, length);
     message[length] = '\0';
 
-    Serial.println(String(message));
+    Serial.printf("%s", message);
     Serial.println("-----------------------");
 
     digitalWrite(ONBOARD_LED, LOW);
@@ -103,10 +106,13 @@ void setupMqqtClient()
   mqttClient.setCallback(callback);
   while (!mqttClient.connected())
   {
-    String client_id = "rh::";
-    client_id += String(WiFi.macAddress());
-    Serial.printf("The client %s connects to the public mqtt broker\n", client_id.c_str());
-    if (mqttClient.connect(client_id.c_str()))
+
+    char client_id[20];
+    strcpy(client_id, "rh::");
+    strcat(client_id, WiFi.macAddress().c_str());
+
+    Serial.printf("The client %s connects to the public mqtt broker\n", client_id);
+    if (mqttClient.connect(client_id))
     {
       Serial.println("Public emqx mqtt broker connected");
     }
@@ -121,7 +127,16 @@ void setupMqqtClient()
   }
 
   // publish and subscribe
-  mqttClient.publish(systemTopic, String("Hi from " + HOLON_ID).c_str());
+
+  char topic[sizeof(systemTopic) + sizeof(HOLON_ID) + 1];
+  strcpy(topic, systemTopic);
+  strcat(topic, HOLON_ID);
+
+  char message[100];
+  strcpy(message, "Hi from "),
+      strcat(message, HOLON_ID);
+
+  mqttClient.publish(topic, message);
   mqttClient.subscribe(deviceTopic);
   publish(NET_COMMAND_READY);
 }
