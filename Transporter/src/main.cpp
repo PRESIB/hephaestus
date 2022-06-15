@@ -31,7 +31,21 @@ PubSubClient mqttClient(espClient);
 
 void publish(char *message)
 {
-  mqttClient.publish(netTopic, message);
+  digitalWrite(ONBOARD_LED, HIGH);
+  Serial.println("sending to; ");
+  Serial.println(netTopic);
+  delay(500);
+
+  if (mqttClient.publish(netTopic, message))
+  {
+    Serial.println("message sent");
+  }
+  else
+  {
+    Serial.println("message not sent");
+  }
+
+  digitalWrite(ONBOARD_LED, LOW);
 }
 
 void callback(char *topic, byte *payload, unsigned int length)
@@ -58,9 +72,9 @@ void callback(char *topic, byte *payload, unsigned int length)
     if (strcmp(DEVICE_COMMAND_READY, message) == 0)
     {
       digitalWrite(ONBOARD_LED, HIGH);
-      Serial.print("ready command received");
+      Serial.println("ready command received");
       delay(500);
-      Serial.print("sending ready command to net");
+      Serial.println("sending ready command to net");
       publish(NET_COMMAND_READY);
       digitalWrite(ONBOARD_LED, LOW);
     }
