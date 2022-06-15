@@ -117,7 +117,7 @@ void setupMqqtClient()
     Serial.printf("The client %s connects to the public mqtt broker\n", client_id);
     if (mqttClient.connect(client_id))
     {
-      Serial.println("Public emqx mqtt broker connected");
+      Serial.println("Broker connected");
     }
     else
     {
@@ -142,8 +142,9 @@ void setupMqqtClient()
   device[dl] = '\0';
 
   mqttClient.publish(systemTopic, message);
+  Serial.printf("Subscribe to %s", device);
   mqttClient.subscribe(device);
-  publish(NET_COMMAND_READY);
+  // publish(NET_COMMAND_READY);
 }
 
 void setup()
