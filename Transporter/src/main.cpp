@@ -3,10 +3,10 @@
 #include <PubSubClient.h>
 
 #define ONBOARD_LED 2
-#define NET_COMMAND_START_SERVICE "s"
-#define NET_COMMAND_READY "r"
-#define NET_COMMAND_MOVE "m"
-#define NET_COMMAND_END_SERVICE "e"
+char *NET_COMMAND_START_SERVICE = "s";
+char *NET_COMMAND_READY = "r";
+char *NET_COMMAND_MOVE = "m";
+char *NET_COMMAND_END_SERVICE = "e";
 
 #define DEVICE_COMMAND_START_SERVICE "start_service"
 #define DEVICE_COMMAND_READY "ready"
