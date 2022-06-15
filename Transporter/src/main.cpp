@@ -139,10 +139,10 @@ void setupMqqtClient()
   strcpy(device, deviceTopic);
   strcat(device, HOLON_ID);
 
-  mqttClient.publish(systemTopic, message);
-  // Serial.printf("Subscribe to %s", device);
-  // mqttClient.subscribe(device);
-  //  publish(NET_COMMAND_READY);
+  // mqttClient.publish(systemTopic, message);
+  //  Serial.printf("Subscribe to %s", device);
+  //  mqttClient.subscribe(device);
+  //   publish(NET_COMMAND_READY);
 }
 
 void setup()
