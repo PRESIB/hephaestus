@@ -37,18 +37,19 @@ void publish(char *message)
 
 void callback(char *topic, byte *payload, unsigned int length)
 {
-  Serial.print("Message arrived in topic: ");
-  Serial.println(topic);
-  Serial.print("Message:");
 
   if (strcmp(topic, deviceTopic) == 0)
   {
+
+    digitalWrite(ONBOARD_LED, HIGH);
+    Serial.print("Message arrived in topic: ");
+    Serial.println(topic);
+    Serial.print("Message:");
+
     char message[length + 1];
     memcpy(message, payload, length);
 
-    digitalWrite(ONBOARD_LED, HIGH);
-
-    Serial.println(message);
+    Serial.println(String(message));
     Serial.println("-----------------------");
 
     digitalWrite(ONBOARD_LED, LOW);
@@ -59,6 +60,10 @@ void callback(char *topic, byte *payload, unsigned int length)
       Serial.print("ready command received");
       delay(500);
       digitalWrite(ONBOARD_LED, LOW);
+    }
+    else
+    {
+      Serial.println("Is not ready command");
     }
   }
 }
