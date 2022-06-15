@@ -139,7 +139,6 @@ void setupMqqtClient()
   char device[dl + 1];
   strcpy(device, deviceTopic);
   strcat(device, HOLON_ID);
-  device[dl] = '\0';
 
   mqttClient.publish(systemTopic, message);
   Serial.printf("Subscribe to %s", device);
