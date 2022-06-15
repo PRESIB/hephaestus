@@ -3,6 +3,8 @@
 #include <Ethernet.h>
 #include <PubSubClient.h>
 
+byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
+
 // MQTT Broker
 const char *mqtt_broker = "test.mosquitto.org";
 const char *topic = "esp32/test";
@@ -64,6 +66,15 @@ void setup()
   Serial.begin(9600); // Start the Serial communication to send messages to the computer
   delay(10);
   Serial.println('\n');
+
+  if (Ethernet.begin(mac) == 0)
+  {
+    Serial.println("Failed to configure Ethernet using DHCP");
+    // no point in carrying on, so do nothing forevermore:
+    while (true)
+      ;
+  }
+
   setupMqqtClient();
 
   digitalWrite(13, LOW);
