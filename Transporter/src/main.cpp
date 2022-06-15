@@ -127,8 +127,8 @@ void setupMqqtClient()
   }
 
   // publish and subscribe
-
-  char topic[20 + 1];
+  Serial.printf("size Of systemTopic: ", sizeof(systemTopic));
+  char topic[sizeof(systemTopic) + 1];
   strcpy(topic, systemTopic);
   strcat(topic, HOLON_ID);
 
