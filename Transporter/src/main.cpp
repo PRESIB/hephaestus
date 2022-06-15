@@ -20,7 +20,7 @@ const char *password = "4ff01eb05e"; // The password of the Wi-Fi network
 
 // MQTT Broker
 const char *mqtt_broker = "test.mosquitto.org";
-const char *netTopic = String("com/nfriacowboy/presib/holon/mqtt/net/" + HOLON_ID).c_str();
+
 const char *deviceTopic = String("com/nfriacowboy/presib/holon/mqtt/device/" + HOLON_ID).c_str();
 const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system";
 
@@ -31,8 +31,9 @@ PubSubClient mqttClient(espClient);
 
 void publish(char *message)
 {
+  const char *netTopic = String("com/nfriacowboy/presib/holon/mqtt/net/" + HOLON_ID).c_str();
   digitalWrite(ONBOARD_LED, HIGH);
-  Serial.println("sending to; ");
+  Serial.println("sending to: ");
   Serial.println(netTopic);
   delay(500);
 
