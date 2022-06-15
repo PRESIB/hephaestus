@@ -3,16 +3,16 @@
 #include <PubSubClient.h>
 
 #define ONBOARD_LED 2
-char *NET_COMMAND_START_SERVICE = (char *)"s";
-char *NET_COMMAND_READY = (char *)"r";
-char *NET_COMMAND_MOVE = (char *)"m";
-char *NET_COMMAND_END_SERVICE = (char *)"e";
+char *NET_COMMAND_START_SERVICE = (char *)"s\0";
+char *NET_COMMAND_READY = (char *)"r\0";
+char *NET_COMMAND_MOVE = (char *)"m\0";
+char *NET_COMMAND_END_SERVICE = (char *)"e\0";
 
-#define DEVICE_COMMAND_START_SERVICE "start_service"
-#define DEVICE_COMMAND_READY "ready"
-#define DEVICE_COMMAND_END_SERVICE "end_service"
+#define DEVICE_COMMAND_START_SERVICE "start_service\0"
+#define DEVICE_COMMAND_READY "ready\0"
+#define DEVICE_COMMAND_END_SERVICE "end_service\0"
 
-const char *HOLON_ID = "rht-001";
+const char *HOLON_ID = "rht-001\0";
 
 // WiFi
 const char *ssid = "MEO-9ABB30";     // The SSID (name) of the Wi-Fi network you want to connect to
@@ -22,7 +22,7 @@ const char *password = "4ff01eb05e"; // The password of the Wi-Fi network
 const char *mqtt_broker = "test.mosquitto.org";
 const char *netTopic = "com/nfriacowboy/presib/holon/mqtt/net/";
 const char *deviceTopic = "com/nfriacowboy/presib/holon/mqtt/device/";
-const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system";
+const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system\0";
 
 const int mqtt_port = 1883;
 
@@ -31,10 +31,13 @@ PubSubClient mqttClient(espClient);
 
 void publish(char *message)
 {
-  char topic[sizeof(netTopic) + sizeof(HOLON_ID) + 1];
+  digitalWrite(ONBOARD_LED, HIGH);
+  int tl = strlen(netTopic) + strlen(HOLON_ID);
+  char topic[tl + 1];
   strcpy(topic, netTopic);
   strcat(topic, HOLON_ID);
-  digitalWrite(ONBOARD_LED, HIGH);
+  topic[tl] = '\0';
+
   Serial.println("sending to: ");
   Serial.println(topic);
 
@@ -127,18 +130,24 @@ void setupMqqtClient()
   }
 
   // publish and subscribe
-  Serial.printf("size Of systemTopic: ", sizeof(systemTopic));
-  char topic[sizeof(systemTopic) + 1];
+  int tl = strlen(systemTopic);
+
+  Serial.printf("size Of systemTopic: ", tl);
+  char topic[tl + 1];
   strcpy(topic, systemTopic);
   strcat(topic, HOLON_ID);
+  topic[tl] = '\0';
 
   char message[20];
-  strcpy(message, "Hi from "),
-      strcat(message, HOLON_ID);
+  strcpy(message, "Hi from ");
+  strcat(message, HOLON_ID);
+  message[19] = '\0';
 
-  char device[sizeof(deviceTopic) + 1];
+  int dl = strlen(deviceTopic);
+  char device[dl + 1];
   strcpy(device, systemTopic);
   strcat(device, HOLON_ID);
+  device[dl] = '\0';
 
   mqttClient.publish(topic, message);
   mqttClient.subscribe(device);
