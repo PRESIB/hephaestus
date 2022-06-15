@@ -37,9 +37,6 @@ void publish(char *message)
   strcpy(topic, netTopic);
   strcat(topic, HOLON_ID);
 
-  Serial.println("sending to: ");
-  Serial.println(topic);
-
   if (mqttClient.publish(topic, message))
   {
     Serial.println("message sent");
@@ -76,28 +73,20 @@ void callback(char *topic, byte *payload, unsigned int length)
     if (strcmp(DEVICE_COMMAND_READY, message) == 0)
     {
       digitalWrite(ONBOARD_LED, HIGH);
-      Serial.println("ready command received");
-      Serial.println("sending ready command to net");
       publish(NET_COMMAND_READY);
       digitalWrite(ONBOARD_LED, LOW);
     }
     else if (strcmp(DEVICE_COMMAND_END_SERVICE, message) == 0)
     {
       digitalWrite(ONBOARD_LED, HIGH);
-      Serial.print("end service command received");
       publish(NET_COMMAND_END_SERVICE);
       digitalWrite(ONBOARD_LED, LOW);
     }
     else if (strcmp(DEVICE_COMMAND_START_SERVICE, message) == 0)
     {
       digitalWrite(ONBOARD_LED, HIGH);
-      Serial.print("start service command received");
       publish(NET_COMMAND_START_SERVICE);
       digitalWrite(ONBOARD_LED, LOW);
-    }
-    else
-    {
-      Serial.println("Is not ready command");
     }
   }
 }
@@ -113,12 +102,7 @@ void setupMqqtClient()
     strcpy(client_id, "rh::");
     strcat(client_id, WiFi.macAddress().c_str());
 
-    Serial.printf("The client %s connects to the public mqtt broker\n", client_id);
-    if (mqttClient.connect(client_id))
-    {
-      Serial.println("Broker connected");
-    }
-    else
+    if (!mqttClient.connect(client_id))
     {
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("failed with state ");
@@ -150,19 +134,15 @@ void setup()
   digitalWrite(ONBOARD_LED, HIGH);
   Serial.begin(115200); // Start the Serial communication to send messages to the computer
   delay(10);
-  Serial.println('\n');
   digitalWrite(ONBOARD_LED, LOW);
 
   WiFi.begin(ssid, password); // Connect to the network
-  Serial.print("Connecting to ");
-  Serial.print(ssid);
 
   while (WiFi.status() != WL_CONNECTED)
   { // Wait for the Wi-Fi to connect
     digitalWrite(ONBOARD_LED, HIGH);
     delay(500);
     digitalWrite(ONBOARD_LED, LOW);
-    Serial.print('.');
   }
 
   Serial.println('\n');
