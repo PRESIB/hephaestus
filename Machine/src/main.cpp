@@ -2,6 +2,21 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <PubSubClient.h>
+#include <EthernetUdp.h>
+#include <Syslog.h>
+
+// Syslog server connection info
+#define SYSLOG_SERVER "192.168.1.101"
+#define SYSLOG_PORT 514
+
+// This device info
+#define DEVICE_HOSTNAME "machine-001"
+#define APP_NAME "PRESIB-RESOURCE-HOLON-MACHINE"
+
+// A UDP instance to let us send and receive packets over UDP
+EthernetUDP udpClient;
+// Create a new empty syslog instance
+Syslog syslog(udpClient, SYSLOG_PROTO_IETF);
 
 // MQTT Broker
 const char *mqtt_broker = "test.mosquitto.org";
@@ -13,19 +28,18 @@ PubSubClient mqttClient(ethClient);
 
 void callback(char *topic, byte *payload, unsigned int length)
 {
-  Serial.print("Message arrived in topic: ");
-  Serial.println(topic);
-  Serial.print("Message:");
+  syslog.log("Message arrived in topic: ");
+  syslog.log(LOG_INFO, topic);
+  syslog.log("Message:");
   for (int i = 0; i < length; i++)
   {
     digitalWrite(13, HIGH);
     digitalWrite(12, HIGH);
-    Serial.print((char)payload[i]);
+    syslog.log(LOG_INFO, String(payload[i]));
     digitalWrite(13, LOW);
     digitalWrite(12, LOW);
   }
-  Serial.println();
-  Serial.println("-----------------------");
+  syslog.log(LOG_INFO, "-----------------------");
 }
 
 void setupMqqtClient()
@@ -35,20 +49,20 @@ void setupMqqtClient()
   while (!mqttClient.connected())
   {
     String client_id = "esp32-client-arduino";
-    Serial.println("The client " + client_id + " connects to the public mqtt broker");
+    syslog.log(LOG_INFO, "The client " + client_id + " connects to the public mqtt broker");
     if (mqttClient.connect(client_id.c_str()))
     {
-      Serial.println("Public emqx mqtt broker connected");
+      syslog.log(LOG_INFO, "Public emqx mqtt broker connected");
     }
     else
     {
-      Serial.print("failed with state ");
-      Serial.print(mqttClient.state());
+      syslog.logf(LOG_ERR, "failed with state %s", mqttClient.state());
       delay(2000);
     }
   }
 
   // publish and subscribe
+  syslog.log(LOG_INFO, "Sending message to MQTT");
   mqttClient.publish(topic, "Hi EMQX I'm ESP32 ^^");
   mqttClient.subscribe(topic);
 }
@@ -63,7 +77,16 @@ void setup()
   digitalWrite(12, HIGH);
   Serial.begin(9600); // Start the Serial communication to send messages to the computer
   delay(10);
-  Serial.println('\n');
+
+  // prepare syslog configuration here (can be anywhere before first call of
+  // log/logf method)
+  syslog.server(SYSLOG_SERVER, SYSLOG_PORT);
+  syslog.deviceHostname(DEVICE_HOSTNAME);
+  syslog.appName(APP_NAME);
+  syslog.defaultPriority(LOG_KERN);
+
+  syslog.log(LOG_INFO, "Start mqtt setup");
+
   setupMqqtClient();
 
   digitalWrite(13, LOW);
