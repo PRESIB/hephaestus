@@ -22,7 +22,7 @@ const char *password = "4ff01eb05e"; // The password of the Wi-Fi network
 const char *mqtt_broker = "test.mosquitto.org";
 const char *netTopic = "com/nfriacowboy/presib/holon/mqtt/net/";
 const char *deviceTopic = "com/nfriacowboy/presib/holon/mqtt/device/";
-const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system\0";
+const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system";
 
 const int mqtt_port = 1883;
 
