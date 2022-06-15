@@ -2,6 +2,8 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
+#define ONBOARD_LED 2
+
 // WiFi
 const char *ssid = "MEO-9ABB30";     // The SSID (name) of the Wi-Fi network you want to connect to
 const char *password = "4ff01eb05e"; // The password of the Wi-Fi network
@@ -13,19 +15,17 @@ const char *mqtt_username = "emqx";
 const char *mqtt_password = "public";
 const int mqtt_port = 1883;
 
-// hardware settings
-const int controlLedPin = 2;
-
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
 void setup()
 {
-  digitalWrite(controlLedPin, HIGH);
+  pinMode(ONBOARD_LED, OUTPUT);
+  digitalWrite(ONBOARD_LED, HIGH);
   Serial.begin(115200); // Start the Serial communication to send messages to the computer
   delay(10);
   Serial.println('\n');
-  digitalWrite(controlLedPin, LOW);
+  digitalWrite(ONBOARD_LED, LOW);
 
   WiFi.begin(ssid, password); // Connect to the network
   Serial.print("Connecting to ");
@@ -33,9 +33,9 @@ void setup()
 
   while (WiFi.status() != WL_CONNECTED)
   { // Wait for the Wi-Fi to connect
-    digitalWrite(controlLedPin, HIGH);
+    digitalWrite(ONBOARD_LED, HIGH);
     delay(500);
-    digitalWrite(controlLedPin, LOW);
+    digitalWrite(ONBOARD_LED, LOW);
     Serial.print('.');
   }
 
