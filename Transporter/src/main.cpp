@@ -42,7 +42,6 @@ void setupMqqtClient()
     if (mqttClient.connect(client_id.c_str()))
     {
       Serial.println("Public emqx mqtt broker connected");
-      mqttClient.subscribe(topic);
     }
     else
     {
@@ -53,6 +52,10 @@ void setupMqqtClient()
       digitalWrite(ONBOARD_LED, LOW);
     }
   }
+
+  // publish and subscribe
+  mqttClient.publish(topic, "Hi EMQX I'm ESP32 ^^");
+  mqttClient.subscribe(topic);
 }
 
 void setup()
