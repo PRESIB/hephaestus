@@ -20,7 +20,7 @@ const char *password = "4ff01eb05e"; // The password of the Wi-Fi network
 
 // MQTT Broker
 const char *mqtt_broker = "test.mosquitto.org";
-
+const char *netTopic = String("com/nfriacowboy/presib/holon/mqtt/net/" + HOLON_ID).c_str();
 const char *deviceTopic = String("com/nfriacowboy/presib/holon/mqtt/device/" + HOLON_ID).c_str();
 const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system";
 
@@ -31,11 +31,9 @@ PubSubClient mqttClient(espClient);
 
 void publish(char *message)
 {
-  const char *netTopic = String("com/nfriacowboy/presib/holon/mqtt/net/" + HOLON_ID).c_str();
   digitalWrite(ONBOARD_LED, HIGH);
   Serial.println("sending to: ");
   Serial.println(netTopic);
-  delay(500);
 
   if (mqttClient.publish(netTopic, message))
   {
@@ -74,7 +72,6 @@ void callback(char *topic, byte *payload, unsigned int length)
     {
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.println("ready command received");
-      delay(500);
       Serial.println("sending ready command to net");
       publish(NET_COMMAND_READY);
       digitalWrite(ONBOARD_LED, LOW);
@@ -83,7 +80,6 @@ void callback(char *topic, byte *payload, unsigned int length)
     {
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("end service command received");
-      delay(500);
       publish(NET_COMMAND_END_SERVICE);
       digitalWrite(ONBOARD_LED, LOW);
     }
@@ -91,7 +87,6 @@ void callback(char *topic, byte *payload, unsigned int length)
     {
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("start service command received");
-      delay(500);
       publish(NET_COMMAND_START_SERVICE);
       digitalWrite(ONBOARD_LED, LOW);
     }
