@@ -3,15 +3,14 @@
 #include <PubSubClient.h>
 
 #define ONBOARD_LED 2
-#define NET_COMMAND_START_SERVICE 's'
-#define NET_COMMAND_READY 'r'
-#define NET_COMMAND_MOVE 'm'
-#define NET_COMMAND_END_SERVICE 'e'
+#define NET_COMMAND_START_SERVICE "s"
+#define NET_COMMAND_READY "r"
+#define NET_COMMAND_MOVE "m"
+#define NET_COMMAND_END_SERVICE "e"
 
-#define DEVICE_COMMAND_START_SERVICE 's'
+#define DEVICE_COMMAND_START_SERVICE "start_service"
 #define DEVICE_COMMAND_READY "ready"
-#define DEVICE_COMMAND_MOVE 'm'
-#define DEVICE_COMMAND_END_SERVICE 'e'
+#define DEVICE_COMMAND_END_SERVICE "end_service"
 
 const String HOLON_ID = "rht-001";
 
@@ -61,6 +60,23 @@ void callback(char *topic, byte *payload, unsigned int length)
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("ready command received");
       delay(500);
+      publish(NET_COMMAND_READY);
+      digitalWrite(ONBOARD_LED, LOW);
+    }
+    if (strcmp(DEVICE_COMMAND_END_SERVICE, message) == 0)
+    {
+      digitalWrite(ONBOARD_LED, HIGH);
+      Serial.print("end service command received");
+      delay(500);
+      publish(NET_COMMAND_END_SERVICE);
+      digitalWrite(ONBOARD_LED, LOW);
+    }
+    if (strcmp(DEVICE_COMMAND_START_SERVICE, message) == 0)
+    {
+      digitalWrite(ONBOARD_LED, HIGH);
+      Serial.print("start service command received");
+      delay(500);
+      publish(NET_COMMAND_START_SERVICE);
       digitalWrite(ONBOARD_LED, LOW);
     }
     else
