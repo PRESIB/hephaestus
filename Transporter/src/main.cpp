@@ -63,7 +63,7 @@ void callback(char *topic, byte *payload, unsigned int length)
       publish(NET_COMMAND_READY);
       digitalWrite(ONBOARD_LED, LOW);
     }
-    if (strcmp(DEVICE_COMMAND_END_SERVICE, message) == 0)
+    else if (strcmp(DEVICE_COMMAND_END_SERVICE, message) == 0)
     {
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("end service command received");
@@ -71,7 +71,7 @@ void callback(char *topic, byte *payload, unsigned int length)
       publish(NET_COMMAND_END_SERVICE);
       digitalWrite(ONBOARD_LED, LOW);
     }
-    if (strcmp(DEVICE_COMMAND_START_SERVICE, message) == 0)
+    else if (strcmp(DEVICE_COMMAND_START_SERVICE, message) == 0)
     {
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("start service command received");
