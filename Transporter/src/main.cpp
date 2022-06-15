@@ -21,9 +21,11 @@ PubSubClient mqttClient(espClient);
 
 void setup()
 {
+  digitalWrite(controlLedPin, HIGH);
   Serial.begin(115200); // Start the Serial communication to send messages to the computer
   delay(10);
   Serial.println('\n');
+  digitalWrite(controlLedPin, LOW);
 
   WiFi.begin(ssid, password); // Connect to the network
   Serial.print("Connecting to ");
