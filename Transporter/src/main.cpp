@@ -123,6 +123,7 @@ void setupMqqtClient()
   // publish and subscribe
   mqttClient.publish(systemTopic, String("Hi from " + HOLON_ID).c_str());
   mqttClient.subscribe(deviceTopic);
+  publish(NET_COMMAND_READY);
 }
 
 void setup()
