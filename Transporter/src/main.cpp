@@ -130,14 +130,6 @@ void setupMqqtClient()
   }
 
   // publish and subscribe
-  int tl = strlen(systemTopic);
-
-  Serial.printf("size Of systemTopic: ", tl);
-  char topic[tl + 1];
-  strcpy(topic, systemTopic);
-  strcat(topic, HOLON_ID);
-  topic[tl] = '\0';
-
   char message[20];
   strcpy(message, "Hi from ");
   strcat(message, HOLON_ID);
@@ -145,11 +137,11 @@ void setupMqqtClient()
 
   int dl = strlen(deviceTopic);
   char device[dl + 1];
-  strcpy(device, systemTopic);
+  strcpy(device, deviceTopic);
   strcat(device, HOLON_ID);
   device[dl] = '\0';
 
-  mqttClient.publish(topic, message);
+  mqttClient.publish(systemTopic, message);
   mqttClient.subscribe(device);
   publish(NET_COMMAND_READY);
 }
