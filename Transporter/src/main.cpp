@@ -49,7 +49,7 @@ void callback(char *topic, byte *payload, unsigned int length)
     char message[length + 1];
 
     strncpy(message, (char *)payload, length);
-    // message[length] = '\0';
+    message[length] = '\0';
 
     Serial.println(String(message));
     Serial.println("-----------------------");
