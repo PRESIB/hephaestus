@@ -42,6 +42,7 @@ void setupMqqtClient()
     if (mqttClient.connect(client_id.c_str()))
     {
       Serial.println("Public emqx mqtt broker connected");
+      mqttClient.subscribe(topic);
     }
     else
     {
