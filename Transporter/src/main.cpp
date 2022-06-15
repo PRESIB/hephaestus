@@ -56,7 +56,7 @@ void callback(char *topic, byte *payload, unsigned int length)
 
     digitalWrite(ONBOARD_LED, LOW);
 
-    if (strcmp(DEVICE_COMMAND_READY, message))
+    if (strcmp(DEVICE_COMMAND_READY, message) == 0)
     {
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("ready command received");
