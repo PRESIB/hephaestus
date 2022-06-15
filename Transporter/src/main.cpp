@@ -3,10 +3,10 @@
 #include <PubSubClient.h>
 
 #define ONBOARD_LED 2
-char *NET_COMMAND_START_SERVICE = "s";
-char *NET_COMMAND_READY = "r";
-char *NET_COMMAND_MOVE = "m";
-char *NET_COMMAND_END_SERVICE = "e";
+char *NET_COMMAND_START_SERVICE = (char *)"s";
+char *NET_COMMAND_READY = (char *)"r";
+char *NET_COMMAND_MOVE = (char *)"m";
+char *NET_COMMAND_END_SERVICE = (char *)"e";
 
 #define DEVICE_COMMAND_START_SERVICE "start_service"
 #define DEVICE_COMMAND_READY "ready"
@@ -60,6 +60,7 @@ void callback(char *topic, byte *payload, unsigned int length)
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("ready command received");
       delay(500);
+      Serial.print("sending ready command to net");
       publish(NET_COMMAND_READY);
       digitalWrite(ONBOARD_LED, LOW);
     }
