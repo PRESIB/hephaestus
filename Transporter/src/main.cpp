@@ -5,12 +5,14 @@
 #define ONBOARD_LED 2
 char *NET_COMMAND_START_SERVICE = (char *)"s";
 char *NET_COMMAND_READY = (char *)"r";
-char *NET_COMMAND_MOVE = (char *)"m";
+char *NET_COMMAND_LOAD = (char *)"l";
+char *NET_COMMAND_UNLOAD = (char *)"u";
 char *NET_COMMAND_END_SERVICE = (char *)"e";
 
 #define DEVICE_COMMAND_START_SERVICE "start_service"
 #define DEVICE_COMMAND_READY "ready"
-#define DEVICE_COMMAND_END_SERVICE "end_service"
+#define DEVICE_COMMAND_LOAD "load"
+#define DEVICE_COMMAND_UNLOAD "unload"
 
 const String HOLON_ID = "rht-001";
 
@@ -73,14 +75,8 @@ void callback(char *topic, byte *payload, unsigned int length)
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.println("ready command received");
       Serial.println("sending ready command to net");
+      delay(random(100) * 10); // random delay for operation
       publish(NET_COMMAND_READY);
-      digitalWrite(ONBOARD_LED, LOW);
-    }
-    else if (strcmp(DEVICE_COMMAND_END_SERVICE, message) == 0)
-    {
-      digitalWrite(ONBOARD_LED, HIGH);
-      Serial.print("end service command received");
-      publish(NET_COMMAND_END_SERVICE);
       digitalWrite(ONBOARD_LED, LOW);
     }
     else if (strcmp(DEVICE_COMMAND_START_SERVICE, message) == 0)
@@ -88,6 +84,24 @@ void callback(char *topic, byte *payload, unsigned int length)
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("start service command received");
       publish(NET_COMMAND_START_SERVICE);
+      delay(random(100) * 100); // random delay for operation
+      publish(NET_COMMAND_END_SERVICE);
+      digitalWrite(ONBOARD_LED, LOW);
+    }
+    else if (strcmp(DEVICE_COMMAND_UNLOAD, message) == 0)
+    {
+      digitalWrite(ONBOARD_LED, HIGH);
+      Serial.print("end service command received");
+      delay(random(20) * 10); // random delay for operation
+      publish(NET_COMMAND_UNLOAD);
+      digitalWrite(ONBOARD_LED, LOW);
+    }
+    else if (strcmp(DEVICE_COMMAND_LOAD, message) == 0)
+    {
+      digitalWrite(ONBOARD_LED, HIGH);
+      Serial.print("start service command received");
+      delay(random(20) * 10); // random delay for operation
+      publish(NET_COMMAND_LOAD);
       digitalWrite(ONBOARD_LED, LOW);
     }
     else
@@ -123,7 +137,7 @@ void setupMqqtClient()
   // publish and subscribe
   mqttClient.publish(systemTopic, String("Hi from " + HOLON_ID).c_str());
   mqttClient.subscribe(deviceTopic);
-  publish(NET_COMMAND_READY);
+ 
 }
 
 void setup()
