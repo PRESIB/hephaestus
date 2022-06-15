@@ -133,7 +133,6 @@ void setupMqqtClient()
   char message[20];
   strcpy(message, "Hi from ");
   strcat(message, HOLON_ID);
-  message[19] = '\0';
 
   int dl = strlen(deviceTopic);
   char device[dl + 1];
