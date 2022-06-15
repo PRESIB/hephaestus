@@ -128,7 +128,7 @@ void setupMqqtClient()
 
   // publish and subscribe
 
-  char topic[sizeof(systemTopic) + 1];
+  char topic[20 + 1];
   strcpy(topic, systemTopic);
   strcat(topic, HOLON_ID);
 
