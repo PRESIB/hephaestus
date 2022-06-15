@@ -128,16 +128,20 @@ void setupMqqtClient()
 
   // publish and subscribe
 
-  char topic[sizeof(systemTopic) + sizeof(HOLON_ID) + 1];
+  char topic[sizeof(systemTopic) + 1];
   strcpy(topic, systemTopic);
   strcat(topic, HOLON_ID);
 
-  char message[100];
+  char message[20];
   strcpy(message, "Hi from "),
       strcat(message, HOLON_ID);
 
+  char device[sizeof(deviceTopic) + 1];
+  strcpy(device, systemTopic);
+  strcat(device, HOLON_ID);
+
   mqttClient.publish(topic, message);
-  mqttClient.subscribe(deviceTopic);
+  mqttClient.subscribe(device);
   publish(NET_COMMAND_READY);
 }
 
