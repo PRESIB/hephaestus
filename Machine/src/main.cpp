@@ -18,7 +18,7 @@ char *NET_COMMAND_END_SERVICE = (char *)"e";
 const String HOLON_ID = "rhm-001";
 
 // MQTT Broker
-const char *mqtt_broker = "mqtt://broker.hivemq.com";
+const char *mqtt_broker = "broker.hivemq.com";
 const char *netTopic = "com/nfriacowboy/presib/holon/mqtt/net/rhm-001";
 const char *deviceTopic = "com/nfriacowboy/presib/holon/mqtt/device/rhm-001";
 const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system";

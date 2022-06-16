@@ -21,7 +21,7 @@ const char *ssid = "MEO-9ABB30";     // The SSID (name) of the Wi-Fi network you
 const char *password = "4ff01eb05e"; // The password of the Wi-Fi network
 
 // MQTT Broker
-const char *mqtt_broker = "mqtt://broker.hivemq.com";
+const char *mqtt_broker = "broker.hivemq.com";
 const char *netTopic = "com/nfriacowboy/presib/holon/mqtt/net/rht-001";
 const char *deviceTopic = "com/nfriacowboy/presib/holon/mqtt/device/rht-001";
 const char *systemTopic = "com/nfriacowboy/presib/hermes/management/system";
