@@ -76,7 +76,7 @@ void callback(char *topic, byte *payload, unsigned int length)
       digitalWrite(12, HIGH);
       Serial.println("ready command received");
       Serial.println("sending ready command to net");
-      delay(random(100) * 10); // random delay for operation
+      delay(random(20) * 10); // random delay for operation
       publish(NET_COMMAND_READY);
       digitalWrite(13, LOW);
       digitalWrite(12, LOW);
@@ -87,7 +87,7 @@ void callback(char *topic, byte *payload, unsigned int length)
       digitalWrite(12, HIGH);
       Serial.print("start service command received");
       publish(NET_COMMAND_START_SERVICE);
-      delay(random(200) * 200); // random delay for operation
+      delay(random(20) * 10); // random delay for operation
       publish(NET_COMMAND_END_SERVICE);
       digitalWrite(13, LOW);
       digitalWrite(12, LOW);

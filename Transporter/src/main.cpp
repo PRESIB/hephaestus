@@ -75,7 +75,7 @@ void callback(char *topic, byte *payload, unsigned int length)
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.println("ready command received");
       Serial.println("sending ready command to net");
-      delay(random(100) * 10); // random delay for operation
+      delay(random(20) * 10); // random delay for operation
       publish(NET_COMMAND_READY);
       digitalWrite(ONBOARD_LED, LOW);
     }
@@ -84,7 +84,7 @@ void callback(char *topic, byte *payload, unsigned int length)
       digitalWrite(ONBOARD_LED, HIGH);
       Serial.print("start service command received");
       publish(NET_COMMAND_START_SERVICE);
-      delay(random(100) * 100); // random delay for operation
+      delay(random(20) * 10); // random delay for operation
       publish(NET_COMMAND_END_SERVICE);
       digitalWrite(ONBOARD_LED, LOW);
     }
@@ -137,7 +137,6 @@ void setupMqqtClient()
   // publish and subscribe
   mqttClient.publish(systemTopic, String("Hi from " + HOLON_ID).c_str());
   mqttClient.subscribe(deviceTopic);
- 
 }
 
 void setup()
