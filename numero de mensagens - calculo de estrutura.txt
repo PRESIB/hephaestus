@@ -1,0 +1,368 @@
+1 ph 1 rht 1 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 31
+
+
+10 ph 1 rht 1 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 274
+
+100 ph 1 rht 1 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 2704
+
+Até aqui se só com 1 rht e 1 rhm
+
+200 ph 10 rht 10 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 5440
+
+100 ph 10 rht 10 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 2740
+
+10 ph 10 rht 10 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 310
+
+1 ph 10 rht 10 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 67
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 ph 2 rht 2 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 35
+
+1 ph 3 rht 3 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 39
+
+1 ph 1 rht 2 rhm 1 service
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 33
+
+
+1 ph 1 rht 1 rhm 2*service1
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 49
+
+1 ph 1 rht 1 rhm 3*service1
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 67
+
+1 ph 1 rht 1 rhm 10*service1
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 193
+
+180 + 9 + 4
+
+decomposição de um grupo de mensagens (31 - 1 ph, 1 serviço, 1 rht, 1 rhm)
+
+18 mensagens por servico
+
+2 mensagens por rh 
+
+9 mensagens constantes
+
+com 2 ph (com 10 serviços), 1rht, 1rhm
+(180 *2)+ 18 + 4 = 382 <- previsão
+
+2 ph 1 rht 1 rhm 10*service1
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 382
+
+
+com 1 ph (com 10 serviços 1), 10 rht, 10 rhm
+
+80 * 10 serviço = 180
+9 * 1 ph = 9
+2 * 20 rh
+
+
+180 + 9 + 40 = 229  <- previsão
+
+com 1 ph (com 10 serviços 1), 10 rht, 10 rhm
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 229
+
+
+com 1 ph (com 10 serviços aleatoreos (serv 1, 2, 3), 10 rht, 10 rhm
+(holon.services=serv1,serv2,serv3,serv3,serv2,serv1,serv2,serv3,serv2,serv1)
+80 * 10 serviço = 180
+9 * 1 ph = 9
+2 * 20 rh
+
+
+180 + 9 + 40 = 229  <- previsão
+
+com 1 ph (com 10 serviços aleatoreos (serv 1, 2, 3), 10 rht, 10 rhm
+broker.hivemq.com
+com
+nfriacowboy
+presib
+holon
+mqtt
+device
+rht-001 = ready
+rhm-001 = ready
+net
+rht-001 = r
+rhm-001 = r
+
+total Messages 229
+
+neste cenario o tipo de serviço não influencia o numero de mensagens!
+
+saber o numero de mensagens esperadas, server para balancear os recursos de infraestrutura de comunicação, 
+ pode ser utilizado para acompanhar em tempo real o progresso de produção. desde que sejam implementados mecanismos que 
+ contemplem as falhas no processo de produção.
+Com a adição de tempos, passamos a poder estimar quando o processo estará concluido.
+
+
+Analisar o comportamento do modelo para os diversos serviços
+100ph_10xserv1_10rht_10rhm done
+
+100ph_10xserv2_10rht_10rhm done
+
+100ph_10xserv3_10rht_10rhm done
+
+
+aumentando o rhm
+100ph_10xserv1_10rht_20rhm done
+
+100ph_10xserv2_10rht_20rhm done
+
+100ph_10xserv3_10rht_20rhm done
+
+
+
+reduzondo o rht 
+100ph_10xserv1_5rht_10rhm done
+
+100ph_10xserv2_5rht_10rhm done
+
+100ph_10xserv3_5rht_10rhm done
+
+
+3 tipos de produtos diferentes (cada produto é um conjunto de 10 serviços iguais)
+1ph_10xserv1_1ph_10xserv2_1ph_10xserv3__10rht_10rhm done
+
+10ph_10xserv1_10ph_10xserv2_10ph_10xserv3__10rht_10rhm done
+
+100ph_10xserv1_100ph_10xserv2_100ph_10xserv3__10rht_10rhm done
+
+
+
+3 tipos de produtos diferentes (cada produto é um conjunto de 10 serviços aleatoreos)
+t1 - holon.services=serv1,serv2,serv3,serv3,serv2,serv1,serv2,serv3,serv2,serv1
+t2 - holon.services=serv1,serv1,serv1,serv2,serv2,serv2,serv3,serv3,serv3,serv2
+t3 - holon.services=serv1,serv2,serv1,serv2,serv1,serv2,serv1,serv2,serv1,serv3
+
+3diff_ph_10rht_10rhm done
+
+30diff_ph_10rht_10rhm done
+
+300diff_ph_10rht_10rhm done
+
+repetir o ultimo 10 *
+
+300diff_ph_10rht_10rhm_ 1 2 3 4 5 6 7 8 9 
+
+Holonic model - na teoria pode ser modelado para que o playground seja um rh, no entanto para que haja beneficio a localização fisica das fabricas e os diferentes meios de transporte para transportar os produtos de um ponto para o outro devem ser contemplados. outras complexidades como o numero de produtos a transportar por meio de transporte acaba por influenciar.
+conceptiualmente podemos ter multiplos dimensões de modelos a funcionar com o mesmo principio, cada dimensão terá considerações especificas mas na sua smples concepção é algo a ser transportado de um ponto para outro e a sofrer um processo de transformação 
